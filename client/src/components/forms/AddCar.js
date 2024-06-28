@@ -16,8 +16,8 @@ const AddCar = ({ Peopledetails }) => {
     forceUpdate();
   }, []);
 
-  const onFinish = (values) => {
-    const { year, make, model, price, personId } = values;
+  const onFinish = (props) => {
+    const { year, make, model, price, personId } = props;
     setId(uuidv4());
     addCar({
       variables: {
