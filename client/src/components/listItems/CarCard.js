@@ -5,7 +5,7 @@ import { EditOutlined } from "@ant-design/icons";
 import RemoveCar from "../buttons/RemoveCar";
 
 const CarCard = (props) => {
-  const { id, year, make, model, price, listOfPeople } = props;
+
 
   const [editMode, setEditmode] = useState(false);
 
@@ -19,16 +19,16 @@ const CarCard = (props) => {
         <UpdateCar
           carsOwned={props}
           onCancel={handleEditButton}
-          listOfPeople={listOfPeople}
+          listOfPeople={props.listOfPeople}
         />
       ) : (
         <Card
           type="inner"
-          title={`${year} ${make} ${model} -> $ ${price}`}
+          title={`${props.year} ${props.make} ${props.model} -> $ ${props.price}`}
           style={{ margin: "1rem 0" }}
           actions={[
             <EditOutlined key="edit" onClick={handleEditButton} />,
-            <RemoveCar id={id} />,
+            <RemoveCar id={props.id} />,
           ]}
         ></Card>
       )}

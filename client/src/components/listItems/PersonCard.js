@@ -6,58 +6,55 @@ import { useNavigate } from "react-router-dom";
 import UpdatePerson from "../forms/UpdatePerson";
 import RemovePerson from "../buttons/RemovePerson";
 
-const PersonCard = (props) => {
-  const { id, firstName, lastName, carsOwned, listOfPeople } = props;
-  const [editMode, setEditmode] = useState(false);
+const PersonCard = ({ id, firstName, lastName, carsOwned, listOfPeople }) => {
+  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
 
-  const handleEditButton = () => {
-    setEditmode(!editMode);
+  const toggleEditMode = () => {
+    setIsEditing(!isEditing);
   };
 
-  const handleLearnMore = (personId) => {
+  const navigateToPersonDetails = (personId) => {
     navigate(`/people/${personId}`);
   };
 
-  const carList =
-    carsOwned.length > 0 ? (
-      carsOwned.map((car) => (
-        <CarCard
-          id={car.id}
-          year={car.year}
-          make={car.make}
-          model={car.model}
-          price={car.price}
-          personId={car.personId}
-          key={car.id}
-          listOfPeople={listOfPeople}
-        />
-      ))
-    ) : (
-      <></>
-    );
+  const renderCarList = () =>
+    carsOwned.length > 0
+      ? carsOwned.map((car) => (
+          <CarCard
+            key={car.id}
+            id={car.id}
+            year={car.year}
+            make={car.make}
+            model={car.model}
+            price={car.price}
+            personId={car.personId}
+            listOfPeople={listOfPeople}
+          />
+        ))
+      : null;
 
   return (
     <>
-      {editMode ? (
+      {isEditing ? (
         <UpdatePerson
           id={id}
           firstName={firstName}
           lastName={lastName}
-          onCancel={handleEditButton}
-          carList={carList}
+          onCancel={toggleEditMode}
+          carList={renderCarList()}
         />
       ) : (
         <Card
           title={`${firstName} ${lastName}`}
           style={{ margin: "1rem 0" }}
           actions={[
-            <EditOutlined key="edit" onClick={handleEditButton} />,
+            <EditOutlined key="edit" onClick={toggleEditMode} />,
             <RemovePerson id={id} />,
           ]}
         >
-          {carList}
-          <Button onClick={() => handleLearnMore(id)} style={{ marginTop: '10px' }}>
+          {renderCarList()}
+          <Button onClick={() => navigateToPersonDetails(id)} style={{ marginTop: "10px" }}>
             Learn More
           </Button>
         </Card>
