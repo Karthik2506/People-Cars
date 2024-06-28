@@ -14,8 +14,8 @@ const UpdateCar = ({ carsOwned, onCancel, listOfPeople }) => {
     forceUpdate();
   }, []);
 
-  const onFinish = (values) => {
-    const { year, make, model, price, personId } = values;
+  const onFinish = (props) => {
+    const { year, make, model, price, personId } = props;
 
     updateCar({
       variables: {
